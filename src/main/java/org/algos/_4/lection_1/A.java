@@ -12,7 +12,7 @@ public class A {
 
         int arrayLength;
         int[] array;
-        int pElement;
+        int pivot;
 
         try {
             arrayLength = Integer.parseInt(reader.readLine().trim());
@@ -23,22 +23,56 @@ public class A {
                 array = new int[] {};
                 reader.readLine();
             }
-            pElement = Integer.parseInt(reader.readLine().trim());
+            pivot = Integer.parseInt(reader.readLine().trim());
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        int[] equalsAndGreaterIndexes = partition(pivot, array, 0, arrayLength);
 
-        int pIndex = partitionLessThanP(pElement, array);
-        System.out.println(pIndex + 1);
-        System.out.println(arrayLength - pIndex - 1);
+        int equalsIndex = equalsAndGreaterIndexes[0];
+        int greaterIndex = equalsAndGreaterIndexes[1];
+
+        if (equalsIndex == greaterIndex) {
+            System.out.println(greaterIndex);
+            System.out.println(arrayLength - greaterIndex);
+        } else if (equalsIndex < greaterIndex) {
+            System.out.println(equalsIndex);
+            System.out.println(arrayLength - equalsIndex);
+        }
+
+        System.out.println(Arrays.toString(array));
+
     }
 
-    public static int partitionLessThanP(int p, int[] array){
-        int l = 0;
-        for (int j : array) {
-            if (j < p) l++;
+    public static int[] partition(int pivot, int[] array, int startIndex, int endIndex){
+        int equals = startIndex, greater = startIndex, now = startIndex;
+
+        int temp;
+        while (now < endIndex) {
+            if (array[now] > pivot) now++;
+            else if (array[now] == pivot) {
+                temp = array[now];
+                array[now] = array[greater];
+                array[greater] = temp;
+                now++;
+                greater++;
+            }
+            else if (array[now] < pivot) {
+                temp = array[greater];
+                array[greater] = array[now];
+                array[now] = temp;
+
+                temp = array[equals];
+                array[equals] = array[greater];
+                array[greater] = temp;
+
+                now++;
+                greater++;
+                equals++;
+            }
         }
-        return l - 1;
+
+        return new int[] {equals, greater};
     }
 }
