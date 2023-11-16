@@ -1,27 +1,34 @@
 package org.algos._4.lection_2;
 
+
 import java.util.Scanner;
 
-public class A {
-
+public class B {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        String string = scanner.nextLine();
 
-        String s = scanner.nextLine();
-        StringHashComparator stringHashComparator = new StringHashComparator(s);
-        int n = scanner.nextInt();
-
-        for (int i = 0; i < n; i++) {
-            int length = scanner.nextInt();
-            int pos1 = scanner.nextInt();
-            int pos2 = scanner.nextInt();
-
-            System.out.println(stringHashComparator.compareSubstrings(length, pos1 + 1, pos2 +1, 1) ? "yes" : "no");
-
-        }
-
+        System.out.println(basisLength(string));
     }
 
+    public static int basisLength(String string){
+        StringHashComparator comparator = new StringHashComparator(string);
+        boolean res;
+        int maxPrefixLength = 0;
+
+        for (int i = 0; i < string.length(); i++) {
+            res = comparator
+                    .compareSubstrings(i, 1, string.length() - i + 1, 1);
+            if (res) {
+                maxPrefixLength = i;
+            }
+        }
+        if (maxPrefixLength == 0) maxPrefixLength = string.length();
+        int basisLength = string.length() - maxPrefixLength;
+        if (basisLength == 0) basisLength = string.length();
+
+        return basisLength;
+    }
 
     static class StringHashComparator {
 
@@ -82,5 +89,4 @@ public class A {
             return res;
         }
     }
-
 }
