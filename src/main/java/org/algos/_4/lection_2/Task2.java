@@ -1,36 +1,26 @@
 package org.algos._4.lection_2;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+public class Task2 {
+    public static void main(String[] args) {
+        String string = "aaagbb";
+        String string2 = doubleMirroredString(string);
+        System.out.println(string2);
+        StringHashComparator comparator = new StringHashComparator(string2);
 
-public class E{
-    public static void main(String[] args) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("src/main/resources/44")));
-        StringBuilder builder = new StringBuilder(reader.readLine());
-        int length = builder.length();
-        String input = builder.toString() + builder.reverse();
+        System.out.println(isAPalindrome(comparator, 4, 5));
 
-        StringHashComparator comparator = new StringHashComparator(input);
+    }
 
-        int counter = 0;
-        for (int i = 2; i <= length; i++) {
-            for (int j = 0; j < length-i+1; j++) {
-                int lengthToCompare = i;
-                int positionStart = j+1;
-                int positionEnd = length*2-j-i+1;
-                boolean eq = comparator.compareSubstrings(lengthToCompare, positionStart, positionEnd, 1);
-                if (eq) {
-                    //System.out.println(eq);
-                    counter++;
-                }
-            }
-        }
+    private static boolean isAPalindrome(StringHashComparator comparator, int indexStart, int indexEnd){
+        int length = indexEnd - indexStart + 1;
+        int index1 = indexStart+1;
+        int index2 = comparator.getLength()-length-indexStart;
 
-        System.out.println(counter+length);
-        reader.close();
+        return comparator.compareSubstrings(length, index1, index2, 1);
+    }
 
+    private static String doubleMirroredString(String string){
+        return string + new StringBuilder(string).reverse();
     }
 
     static class StringHashComparator {
@@ -41,16 +31,7 @@ public class E{
         private long[][] pow;
 
         private static long[][] pxArray = {
-                {1000000007L, 313},
-                {1000000007L, 277},
-//                {1000000007L, 515},
-//                {1000000007L, 733},
-//                {1000000007L, 311},
-//                {1000000007L, 259},
-//                {1000000007L, 291},
-//                {1000000007L, 409},
-//                {1000000007L, 913},
-//                {1000000007L, 301},
+                {1000000007L, 313}
         };
 
         StringHashComparator(String string){
@@ -91,6 +72,9 @@ public class E{
 
             return res;
         }
+
+        public int getLength() {
+            return this.string.length();
+        }
     }
 }
-
