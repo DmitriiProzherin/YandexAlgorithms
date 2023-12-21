@@ -8,45 +8,49 @@ import java.util.random.RandomGenerator;
 
 public class B {
     public static void main(String[] args) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        int n;
-        int[] array;
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+//        int n;
+//        int[] array;
+//
+//        try {
+//            n = Integer.parseInt(reader.readLine().trim());
+//            if (n != 0) {
+//                StringTokenizer tokenizer = new StringTokenizer(reader.readLine(), " ");
+//                array = new int[n];
+//                int  i = 0;
+//                while (tokenizer.hasMoreTokens()) {
+//                    array[i] = Integer.parseInt(tokenizer.nextToken());
+//                    i++;
+//                }
+//            }
+//            else array = new int[] {};
+//
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
 
-        try {
-            n = Integer.parseInt(reader.readLine().trim());
-            if (n != 0) {
-                StringTokenizer tokenizer = new StringTokenizer(reader.readLine(), " ");
-                array = new int[n];
-                int  i = 0;
-                while (tokenizer.hasMoreTokens()) {
-                    array[i] = Integer.parseInt(tokenizer.nextToken());
-                    i++;
-                }
-            }
-            else array = new int[] {};
+        int[] array2 = new int[1_000_000_00];
+        Arrays.fill(array2, 1_000_000);
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        quickSort(array, 0, array.length);
+        quickSort(array2, 0, array2.length);
 
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
-        for (var el : array) {
-            try {
-                writer.write(el + " ");
-            }
-            catch (IOException e) {
-                throw new RuntimeException();
-            }
-        }
-
-        try {
-            reader.close();
-            writer.close();
-        }
-        catch (IOException e) {
-            throw new RuntimeException();
-        }
+//        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
+//        for (var el : array2) {
+//            try {
+//                writer.write(el + " ");
+//            }
+//            catch (IOException e) {
+//                throw new RuntimeException();
+//            }
+//        }
+//
+//        try {
+////            reader.close();
+//            writer.close();
+//        }
+//        catch (IOException e) {
+//            throw new RuntimeException();
+//        }
     }
 
 
@@ -56,7 +60,6 @@ public class B {
             Random random = new Random();
             int pivot = array[random.nextInt(left, right)];
             System.out.println(pivot);
-
             int[] indexes = partition(pivot, array, left, right);
 
             quickSort(array, left, indexes[0]);
